@@ -1,0 +1,17 @@
+spring:
+  data:
+    mongodb:
+      uri: mongodb+srv://IT20122096:ivv00mZCwNSqeeff@itp.02s4w.mongodb.net/uee-backend?retryWrites=true&w=majority
+    rest:
+      base-path: /api/v1
+  servlet:
+    multipart:
+      enabled: true
+      file-size-threshold: 2MB
+      max-file-size: 5MB
+      max-request-size: 10MB
+
+application:
+  secret: secretkey123
+server:
+  port: 8081
