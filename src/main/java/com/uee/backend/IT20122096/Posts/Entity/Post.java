@@ -1,10 +1,11 @@
-package com.uee.backend.IT20122096.Campaigns.Entity;
+package com.uee.backend.IT20122096.Posts.Entity;
 
 import lombok.*;
 import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.persistence.Id;
+import java.util.List;
 
 @Getter
 @Setter
@@ -13,17 +14,13 @@ import javax.persistence.Id;
 @NoArgsConstructor
 
 @Document
-public class Contribution {
-    public enum Status{
-        ABSENT,PRESENT
-    }
+public class Post {
     @Id
     private ObjectId id;
     private ObjectId userId;
     private ObjectId campaignId;
-    private String firstName;
-    private String lastName;
-    private String contactNo;
-    private String contribution;
-    private Status attendance=Status.ABSENT;
+    private String description;
+    private String image;
+
+
 }

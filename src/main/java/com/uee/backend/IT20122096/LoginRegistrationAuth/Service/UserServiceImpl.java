@@ -69,14 +69,12 @@ public class UserServiceImpl implements UserDetailsService, UserService {
         }
 
         if (userRegisterDTO.getIsAdmin()) {
-            com.uee.backend.IT20122096.LoginRegistrationAuth.Entity.User admin = new Admin(
-                    userRegisterDTO.getId(), userRegisterDTO.getName(), userRegisterDTO.getEmail(), userRegisterDTO.getPassword(), null, null, null, userRegisterDTO.getIsAdmin());
+            com.uee.backend.IT20122096.LoginRegistrationAuth.Entity.User admin = new Admin(userRegisterDTO.getId(), userRegisterDTO.getName(), userRegisterDTO.getEmail(), userRegisterDTO.getPassword(), null, null, null, userRegisterDTO.getIsAdmin());
             admin.setPassword(admin.passwordEncoder(userRegisterDTO.getPassword()));
 
             return new ResponseEntity<>(userRepository.save(admin), HttpStatus.OK);
         }
-        com.uee.backend.IT20122096.LoginRegistrationAuth.Entity.User visitor = new com.uee.backend.IT20122096.LoginRegistrationAuth.Entity.User(
-                userRegisterDTO.getId(), userRegisterDTO.getName(), userRegisterDTO.getEmail(), userRegisterDTO.getPassword(), null, null, null);
+        com.uee.backend.IT20122096.LoginRegistrationAuth.Entity.User visitor = new com.uee.backend.IT20122096.LoginRegistrationAuth.Entity.User(userRegisterDTO.getId(), userRegisterDTO.getName(), userRegisterDTO.getEmail(), userRegisterDTO.getPassword(), null, null, "file:///data/user/0/host.exp.exponent/cache/ImagePicker/98b2c012-2077-4911-8a7d-cc58fee84512.jpeg");
         visitor.setPassword(visitor.passwordEncoder(userRegisterDTO.getPassword()));
 
         return new ResponseEntity<>(userRepository.save(visitor), HttpStatus.OK);
@@ -86,7 +84,7 @@ public class UserServiceImpl implements UserDetailsService, UserService {
     public ResponseEntity<?> updateUser(UserUpdateDTO userDTO) {
 
         Optional<com.uee.backend.IT20122096.LoginRegistrationAuth.Entity.User> user1 = userRepository.findById(userDTO.getId());
-        if(user1.isPresent()){
+        if (user1.isPresent()) {
             com.uee.backend.IT20122096.LoginRegistrationAuth.Entity.User user = user1.get();
             if (userDTO.getCurrentPassword() != null && !(user.isPasswordMatch(userDTO.getCurrentPassword(), user.getPassword()))) {
                 return new ResponseEntity<>("Wrong Password", HttpStatus.BAD_REQUEST);

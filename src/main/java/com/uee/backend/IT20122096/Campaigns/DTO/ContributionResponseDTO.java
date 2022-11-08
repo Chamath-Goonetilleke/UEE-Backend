@@ -1,6 +1,7 @@
 package com.uee.backend.IT20122096.Campaigns.DTO;
 
 import com.uee.backend.IT20122096.Campaigns.Entity.Contribution;
+import com.uee.backend.IT20122096.LoginRegistrationAuth.Entity.User;
 import lombok.*;
 import org.bson.types.ObjectId;
 
@@ -9,13 +10,11 @@ import org.bson.types.ObjectId;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
-public class ContributionDTO {
+public class ContributionResponseDTO {
     private ObjectId id;
     private ObjectId userId;
     private ObjectId campaignId;
-    private String firstName;
-    private String lastName;
-    private String contactNo;
-    private String contribution;
-    private Contribution.Status attendance;
+    private String name;
+    private User user;
+    private Contribution.Status attendance = Contribution.Status.ABSENT;
 }

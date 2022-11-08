@@ -33,7 +33,7 @@ public class CampaignServiceImpl implements CampaignService {
             campaign.setImage(campaignDTO.getImage());
 
             return campaignRepository.save(campaign);
-        }catch (Exception e){
+        } catch (Exception e) {
             return null;
         }
 
@@ -42,33 +42,44 @@ public class CampaignServiceImpl implements CampaignService {
 
     @Override
     public List<Campaign> getAllCampaigns() {
-        try{
+        try {
             return campaignRepository.findAll();
-        }catch (Exception e){
+        } catch (Exception e) {
             return Collections.emptyList();
         }
     }
 
     @Override
     public List<Campaign> getAllCampaignsByUserId(ObjectId userId) {
-        try{
+        try {
             return campaignRepository.getAllCampaignsByUserId(userId);
-        }catch (Exception e){
-            return Collections.emptyList();
+        } catch (Exception e) {
+            return null;
         }
     }
 
     @Override
     public Optional<Campaign> getCampaignById(ObjectId campId) {
-        try{
+        try {
             return campaignRepository.findById(campId);
-        }catch (Exception e){
+        } catch (Exception e) {
             return Optional.empty();
         }
     }
 
     @Override
     public Campaign updateCampaign(CampaignDTO campaignDTO) {
-        return null;
+        try {
+            Optional<Campaign> campaignOptional = campaignRepository.findById(campaignDTO.getId());
+            Campaign campaign = campaignOptional.get();
+            switch (campaignDTO.getStatus()) {
+                case FINISH -> campaign.setStatus(Campaign.Status.FINISH);
+                case PENDING -> campaign.setStatus(Campaign.Status.PENDING);
+                case HAPPENING -> campaign.setStatus(Campaign.Status.HAPPENING);
+            }
+            return campaignRepository.save(campaign);
+        }catch (Exception e){
+            return null;
+        }
     }
 }
