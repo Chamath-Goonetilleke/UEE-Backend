@@ -7,7 +7,9 @@ import com.uee.backend.IT20122096.Campaigns.Repository.ContributionRepository;
 import com.uee.backend.IT20122096.Campaigns.Service.Abstract.ContributionService;
 import com.uee.backend.IT20122096.LoginRegistrationAuth.Entity.User;
 import com.uee.backend.IT20122096.LoginRegistrationAuth.Service.UserService;
+import com.uee.backend.IT20122096.Points.Service.PointService;
 import org.bson.types.ObjectId;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
@@ -23,10 +25,13 @@ public class ContributionServiceImpl implements ContributionService {
     ContributionRepository contributionRepository;
     final
     UserService userService;
+    final
+    PointService pointService;
 
-    public ContributionServiceImpl(ContributionRepository contributionRepository, UserService userService) {
+    public ContributionServiceImpl(ContributionRepository contributionRepository, UserService userService, PointService pointService) {
         this.contributionRepository = contributionRepository;
         this.userService = userService;
+        this.pointService = pointService;
     }
 
     @Override
@@ -87,6 +92,9 @@ public class ContributionServiceImpl implements ContributionService {
                 Contribution contribution=contributionOptional.get();
                 if(cont.getAttendance().equals(Contribution.Status.PRESENT)){
                     contribution.setAttendance(Contribution.Status.PRESENT);
+                    /**
+                     * award points for contribution*/
+                    pointService.updatePoint(cont.getUserId(),20);
                 }
                 else {
                     contribution.setAttendance(Contribution.Status.ABSENT);

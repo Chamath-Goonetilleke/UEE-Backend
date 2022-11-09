@@ -4,7 +4,9 @@ import com.uee.backend.IT20122096.Campaigns.DTO.CampaignDTO;
 import com.uee.backend.IT20122096.Campaigns.Entity.Campaign;
 import com.uee.backend.IT20122096.Campaigns.Repository.CampaignRepository;
 import com.uee.backend.IT20122096.Campaigns.Service.Abstract.CampaignService;
+import com.uee.backend.IT20122096.Points.Service.PointService;
 import org.bson.types.ObjectId;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.Collections;
@@ -15,9 +17,12 @@ import java.util.Optional;
 public class CampaignServiceImpl implements CampaignService {
 
     final CampaignRepository campaignRepository;
+    final
+    PointService pointService;
 
-    public CampaignServiceImpl(CampaignRepository campaignRepository) {
+    public CampaignServiceImpl(CampaignRepository campaignRepository, PointService pointService) {
         this.campaignRepository = campaignRepository;
+        this.pointService = pointService;
     }
 
     @Override
@@ -31,6 +36,10 @@ public class CampaignServiceImpl implements CampaignService {
             campaign.setEndTime(campaignDTO.getEndTime());
             campaign.setDescription(campaignDTO.getDescription());
             campaign.setImage(campaignDTO.getImage());
+
+            /**
+             * award points for hosting a campaign*/
+            pointService.updatePoint(campaignDTO.getHost(),40);
 
             return campaignRepository.save(campaign);
         } catch (Exception e) {

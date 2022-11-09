@@ -37,9 +37,7 @@ public class PostController {
             return new ResponseEntity<>("Saved Successfully", HttpStatus.OK);
         } else {
             return new ResponseEntity<>("Something Went Wrong", HttpStatus.BAD_REQUEST);
-
         }
-
     }
 
     @GetMapping("/getAllPosts")

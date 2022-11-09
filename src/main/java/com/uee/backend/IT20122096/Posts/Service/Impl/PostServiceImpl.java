@@ -4,6 +4,7 @@ import com.uee.backend.IT20122096.Campaigns.DTO.ContributionResponseDTO;
 import com.uee.backend.IT20122096.Campaigns.Entity.Campaign;
 import com.uee.backend.IT20122096.Campaigns.Service.Abstract.CampaignService;
 import com.uee.backend.IT20122096.Campaigns.Service.Abstract.ContributionService;
+import com.uee.backend.IT20122096.Points.Service.PointService;
 import com.uee.backend.IT20122096.Posts.DTO.CommentResponseDTO;
 import com.uee.backend.IT20122096.Posts.DTO.PostDTO;
 import com.uee.backend.IT20122096.Posts.DTO.PostResponseDTO;
@@ -12,6 +13,7 @@ import com.uee.backend.IT20122096.Posts.Repository.PostRepository;
 import com.uee.backend.IT20122096.Posts.Service.CommentService;
 import com.uee.backend.IT20122096.Posts.Service.PostService;
 import org.bson.types.ObjectId;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -28,13 +30,16 @@ public class PostServiceImpl implements PostService {
     final
     CommentService commentService;
     final
+    PointService pointService;
+    final
     ContributionService contributionService;
 
-    public PostServiceImpl(PostRepository postRepository, CampaignService campaignService, CommentService commentService, ContributionService contributionService) {
+    public PostServiceImpl(PostRepository postRepository, CampaignService campaignService, CommentService commentService, ContributionService contributionService, PointService pointService) {
         this.postRepository = postRepository;
         this.campaignService = campaignService;
         this.commentService = commentService;
         this.contributionService = contributionService;
+        this.pointService = pointService;
     }
 
     @Override
@@ -47,7 +52,11 @@ public class PostServiceImpl implements PostService {
         post.setImage(postDTO.getImage());
 
         try {
+            /**
+             * award points for creating a post*/
+            pointService.updatePoint(postDTO.getUserId(),10);
             return postRepository.save(post);
+
         }catch (Exception e){
             return null;
         }
