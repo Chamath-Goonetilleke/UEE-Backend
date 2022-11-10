@@ -5,18 +5,20 @@ import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.persistence.Id;
+import java.util.List;
+
 @Getter
 @Setter
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
 @Document
-public class Blog {
+public class Complain {
     @Id
     private ObjectId id;
     private String title;
     private String userName;
     private String imageUrl;
     private String content;
-    private String time;
+    private String createdDate;
 }

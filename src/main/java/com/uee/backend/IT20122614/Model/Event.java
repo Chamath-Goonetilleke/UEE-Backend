@@ -11,7 +11,7 @@ import javax.persistence.Id;
 @AllArgsConstructor
 @NoArgsConstructor
 @Document
-public class Blog {
+public class Event {
     @Id
     private ObjectId id;
     private String title;
@@ -19,4 +19,6 @@ public class Blog {
     private String imageUrl;
     private String content;
     private String time;
+    private String date;
+    private String createdDate;
 }
